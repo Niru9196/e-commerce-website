@@ -1,27 +1,63 @@
-.new-collections{
+.new-collections {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 100px;
+    gap: 1.25rem;
+    margin-bottom: 6.25rem;
+    padding: 2rem;
 }
 
-.new-collections h1{
+.new-collections h1 {
     color: #171717;
-    font-size: 50px;
+    font-size: 3.125rem;
     font-weight: 600;
+    text-align: center;
 }
 
-.new-collections hr{
-    width: 200px;
-    height: 12px;
-    border-radius: 10px;
+.new-collections hr {
+    width: 12.5rem;
+    height: 0.75rem;
+    border-radius: 0.625rem;
     background: #252525;
 }
 
-.collections{
+.collections {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    margin-top: 50px;
-    gap: 30px;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 3.125rem;
+    gap: 1.875rem;
+    justify-items: center;
+}
+
+@media (max-width: 600px) {
+    .new-collections h1 {
+        font-size: 2.5rem;
+    }
+
+    .collections {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1.25rem;
+    }
+}
+
+@media (min-width: 1024rem) and (max-width: 64rem) {
+    .new-collections h1 {
+        font-size: 2.75rem;
+    }
+
+    .collections {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (min-width: 64.0625rem) {
+    .new-collections h1 {
+        font-size: 3.125rem;
+    }
+
+    .collections {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.875rem;
+    }
 }
