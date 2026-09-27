@@ -1,0 +1,45 @@
+.atc-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 3rem;
+    overflow: hidden;
+}
+
+.atc-btn.is-success {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+}
+
+.atc-spinner {
+    width: 13px;
+    height: 13px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: atc-spin 700ms linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes atc-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* A spinner is pure motion, so under reduced motion it becomes a static
+   dimmed ring and the "Adding…" label carries the meaning instead. */
+@media (prefers-reduced-motion: reduce) {
+    .atc-spinner {
+        animation: none;
+        opacity: 0.5;
+        border-right-color: currentColor;
+    }
+}
+
+.atc-check {
+    flex-shrink: 0;
+}

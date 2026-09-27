@@ -1,0 +1,169 @@
+.search-overlay-root {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+}
+
+.search-overlay-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(23, 20, 15, 0.5);
+    backdrop-filter: blur(2px);
+}
+
+.search-overlay-panel {
+    position: relative;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-3);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-5) var(--page-margin);
+    border-bottom: 1px solid var(--border);
+}
+
+.search-input {
+    flex: 1;
+    min-width: 0;
+    padding: var(--space-3) 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-strong);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    color: var(--fg);
+}
+
+.search-input::placeholder {
+    color: var(--fg-muted);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+}
+
+/* The browser's own clear button conflicts with the catalogue styling. */
+.search-input::-webkit-search-cancel-button {
+    appearance: none;
+}
+
+.search-submit {
+    flex-shrink: 0;
+}
+
+.search-close {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid var(--border);
+    font-size: var(--text-lg);
+    line-height: 1;
+    color: var(--fg);
+    cursor: pointer;
+}
+
+.search-close:hover {
+    background: var(--fg);
+    color: var(--bg);
+}
+
+.search-body {
+    padding: var(--space-5) var(--page-margin) var(--space-6);
+}
+
+.search-results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-result-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    width: 100%;
+    padding: var(--space-3);
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--duration-fast) var(--ease);
+}
+
+.search-result.is-active .search-result-btn,
+.search-result-btn:hover {
+    background: var(--bg-alt);
+}
+
+.search-result-btn img {
+    width: 48px;
+    height: 58px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.search-result-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.search-result-name {
+    font-size: var(--text-base);
+    color: var(--fg);
+}
+
+.search-result-meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--fg-muted);
+}
+
+.search-empty {
+    padding: var(--space-5) var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--fg-muted);
+}
+
+.search-prompts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.search-prompt-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.search-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+@media (min-width: 1025px) {
+    .search-form {
+        padding: var(--space-6) var(--page-margin-lg);
+    }
+
+    .search-body {
+        padding: var(--space-5) var(--page-margin-lg) var(--space-7);
+    }
+}

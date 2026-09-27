@@ -1,0 +1,57 @@
+.wishlist-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    cursor: pointer;
+    color: var(--fg);
+    background: var(--color-white);
+    border: 1px solid var(--border-strong);
+    transition: color var(--duration-base) var(--ease),
+        background var(--duration-base) var(--ease),
+        border-color var(--duration-base) var(--ease),
+        transform var(--duration-base) var(--ease-out-expo);
+}
+
+/* Floating variant used on product cards */
+.wishlist-btn-overlay {
+    width: 2.25rem;
+    height: 2.25rem;
+    box-shadow: var(--shadow-2);
+}
+
+.wishlist-btn-overlay:hover {
+    transform: translateY(var(--lift-sm));
+}
+
+.wishlist-btn.is-active {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Full-width labelled variant used on the product page */
+.wishlist-btn-inline {
+    padding: 0.9rem 1.5rem;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    background: transparent;
+    border-color: var(--fg);
+}
+
+.wishlist-btn-inline:hover {
+    background: var(--fg);
+    color: var(--bg);
+}
+
+.wishlist-btn-inline.is-active {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.wishlist-btn-inline.is-active:hover {
+    background: var(--accent);
+    color: var(--color-white);
+}

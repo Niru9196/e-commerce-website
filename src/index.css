@@ -1,18 +1,521 @@
-*{
+/* ============================================================
+   CATALOGUE No. 3 — design tokens
+   Japanese editorial x Swiss grid x 1970s print catalogue,
+   rebuilt for a contemporary digital storefront.
+   ============================================================ */
+
+*,
+*::before,
+*::after {
   margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* ---- color: warm paper stock / print ink / poster red ---- */
+  --color-paper: #f2ede2;
+  --color-paper-dim: #e8e0d0;
+  --color-ink: #17140f;
+  --color-ink-soft: #34302a;
+  --color-line: #cfc4ac;
+  --color-line-strong: #b3a688;
+  --color-mute: #6f6555;
+  --color-accent: #c4401e;
+  --color-accent-dim: #9c3116;
+  --color-white: #fffbf2;
+
+  /* semantic aliases */
+  --bg: var(--color-paper);
+  --bg-alt: var(--color-paper-dim);
+  --fg: var(--color-ink);
+  --fg-muted: var(--color-mute);
+  --border: var(--color-line);
+  --border-strong: var(--color-line-strong);
+  --accent: var(--color-accent);
+  --accent-dim: var(--color-accent-dim);
+
+  /* ---- typography ---- */
+  --font-display: "Fraunces", "Iowan Old Style", serif;
+  --font-body: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Space Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+  /* type scale (rem) */
+  --text-xs: 0.75rem;    /* 12 */
+  --text-sm: 0.8125rem;  /* 13 */
+  --text-base: 0.875rem; /* 14 */
+  --text-md: 1rem;       /* 16 */
+  --text-lg: 1.25rem;    /* 20 */
+  --text-xl: 1.5625rem;  /* 25 */
+  --text-2xl: 2rem;      /* 32 */
+  --text-3xl: 2.5rem;    /* 40 */
+  --text-4xl: 3.5rem;    /* 56 */
+  --text-5xl: 4.5rem;    /* 72 */
+
+  --tracking-wide: 0.08em;
+  --tracking-wider: 0.14em;
+
+  /* ---- spacing scale (rem) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  /* ---- layout: Swiss 12-col grid ---- */
+  --page-margin: 1.5rem;
+  --page-margin-lg: 3rem;
+  --content-max: 84rem;
+  --grid-gap: 1.25rem;
+
+  /* ---- radius: sharp by default (print, not app) ---- */
+  --radius-0: 0;
+  --radius-sm: 1px;
+
+  /* ---- depth: warm ink-tinted elevation, not neutral grey ----
+     The palette is a warm paper stock, so shadows are mixed from the ink
+     colour (#17140f) rather than pure black. Neutral grey shadows read as
+     "generic web app" against this background. */
+  --shadow-1: 0 1px 2px rgba(23, 20, 15, 0.05),
+    0 2px 6px rgba(23, 20, 15, 0.04);
+  --shadow-2: 0 2px 4px rgba(23, 20, 15, 0.06),
+    0 8px 18px rgba(23, 20, 15, 0.07);
+  --shadow-3: 0 4px 8px rgba(23, 20, 15, 0.07),
+    0 18px 38px rgba(23, 20, 15, 0.10);
+  --shadow-inset: inset 0 0 0 1px rgba(23, 20, 15, 0.06);
+
+  /* hover lift distances */
+  --lift-sm: -2px;
+  --lift-md: -4px;
+  --lift-lg: -6px;
+
+  /* focus ring */
+  --focus-ring-color: var(--accent);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
+
+  /* ---- motion ---- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 400ms;
+  --duration-slower: 700ms;
+
+  /* ---- z-index scale ---- */
+  --z-grain: 1;
+  --z-sticky: 50;
+  --z-navbar: 100;
+  --z-overlay: 200;
+  --z-drawer: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Poppins';
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-body);
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   Focus visibility — applied globally so every interactive
+   element is keyboard-discoverable without per-component work.
+   ============================================================ */
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-sm);
+}
+
+/* Inputs keep a ring even on plain focus, since typing focus is not
+   always keyboard-initiated but still needs to be locatable. */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: 1px;
+}
+
+/* ============================================================
+   Reduced motion — a CSS safety net for transitions declared in
+   stylesheets. Framer Motion is handled separately via
+   <MotionConfig reducedMotion="user"> and useReducedMotion().
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   Reusable catalogue primitives
+   ============================================================ */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* Catalogue index number — e.g. "01 /" used before section titles */
+.cat-index {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.03em;
+  color: var(--accent);
+}
+
+/* SKU tag — used on product cards / plates, e.g. "SKU 014 — WMN" */
+.sku-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+}
+
+/* Thin horizontal rule, print spec-sheet style */
+.rule {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+.rule-strong {
+  border: none;
+  border-top: 1px solid var(--fg);
+  margin: 0;
+}
+
+/* Registration mark: a small crosshair + circle, used at section
+   corners as a decorative-but-restrained print-production motif. */
+.reg-mark {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  opacity: 0.55;
+}
+
+.reg-mark::before,
+.reg-mark::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+
+.reg-mark::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.reg-mark::after {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+.reg-mark-circle {
+  position: absolute;
+  inset: 3px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+/* Image "plate" — a fixed-ratio mount for photography, so images
+   never float full-bleed; they sit inside a printed frame. */
+.plate {
+  position: relative;
+  background: var(--bg-alt);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.plate-duotone img {
+  filter: grayscale(0.55) contrast(1.1) saturate(0.85) sepia(0.06);
+}
+
+.plate-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  height: 1.9rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.plate-caption span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.plate-regmarks > .reg-mark {
+  position: absolute;
+  color: var(--fg);
+}
+
+.plate-regmarks > .reg-mark:nth-of-type(1) { top: 8px; left: 8px; }
+.plate-regmarks > .reg-mark:nth-of-type(2) { top: 8px; right: 8px; }
+.plate-regmarks > .reg-mark:nth-of-type(3) { bottom: 8px; left: 8px; }
+.plate-regmarks > .reg-mark:nth-of-type(4) { bottom: 8px; right: 8px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--fg);
+  padding: 0.9rem 1.75rem;
+  cursor: pointer;
+  transition: background var(--duration-base) var(--ease),
+    color var(--duration-base) var(--ease),
+    border-color var(--duration-base) var(--ease);
+}
+
+.btn-primary {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.btn-primary:hover {
+  background: transparent;
+  color: var(--fg);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--fg);
+}
+
+.btn-outline:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-sm {
+  padding: 0.6rem 1.1rem;
+  font-size: var(--text-sm);
+}
+
+/* ============================================================
+   Depth primitives
+   The catalogue language is flat print, so depth is expressed as
+   *stacked paper* and warm ink shadow — never as a glossy card.
+   ============================================================ */
+
+/* Elevation utilities */
+.elev-1 { box-shadow: var(--shadow-1); }
+.elev-2 { box-shadow: var(--shadow-2); }
+.elev-3 { box-shadow: var(--shadow-3); }
+
+/* `.stack` renders two offset sheets behind an element so the content
+   reads as the top sheet of a small pile of printed stock. */
+.stack {
+  position: relative;
+}
+
+.stack::before,
+.stack::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.stack::before {
+  transform: translate(5px, 5px);
+}
+
+.stack::after {
+  transform: translate(10px, 10px);
+  opacity: 0.55;
+}
+
+.stack:hover::before {
+  transform: translate(7px, 7px);
+}
+
+.stack:hover::after {
+  transform: translate(14px, 14px);
+}
+
+/* Plates gain a subtle lift and an ink shadow, so photography sits
+   *on* the page rather than being cut into it. */
+.plate {
+  box-shadow: var(--shadow-1);
+  transition: box-shadow var(--duration-slow) var(--ease),
+    transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.plate-raised {
+  box-shadow: var(--shadow-2);
+}
+
+.plate-lift:hover {
+  box-shadow: var(--shadow-3);
+  transform: translateY(var(--lift-md));
+}
+
+/* Paper tooth: a fixed, non-interactive grain layer over the whole
+   viewport at very low opacity. Gives the flat background texture
+   without adding an image request. */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-grain);
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   Accessibility helpers
+   ============================================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: var(--space-4);
+  z-index: var(--z-toast);
+  transform: translateY(-120%);
+  padding: var(--space-3) var(--space-5);
+  background: var(--fg);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  transition: transform var(--duration-base) var(--ease);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline-offset: -4px;
+}
+
+/* Shared page shell so every page gets consistent gutters */
+.page-shell {
+  padding: var(--space-7) var(--page-margin) var(--space-9);
+}
+
+@media (min-width: 1025px) {
+  .page-shell {
+    padding: var(--space-8) var(--page-margin-lg) var(--space-10);
+  }
 }

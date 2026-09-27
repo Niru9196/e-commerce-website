@@ -1,0 +1,81 @@
+.color-swatches {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.color-swatches-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+}
+
+.color-swatches-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--fg);
+}
+
+.color-swatches-value {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.03em;
+    color: var(--fg-muted);
+}
+
+.color-swatches-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+.color-swatch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    padding: 3px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: border-color var(--duration-base) var(--ease),
+        transform var(--duration-base) var(--ease-out-expo),
+        box-shadow var(--duration-base) var(--ease);
+}
+
+.color-swatch:hover {
+    transform: translateY(var(--lift-sm));
+    box-shadow: var(--shadow-2);
+}
+
+.color-swatch.is-selected {
+    border-color: var(--fg);
+    box-shadow: var(--shadow-2);
+}
+
+.color-swatch-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--swatch);
+    /* Inner hairline keeps very pale tones visible against paper. */
+    box-shadow: inset 0 0 0 1px rgba(23, 20, 15, 0.14);
+}
+
+/* Compact, non-interactive-looking row used on product cards */
+.color-swatches-sm .color-swatch {
+    width: 1.1rem;
+    height: 1.1rem;
+    padding: 2px;
+    border-color: transparent;
+}
+
+.color-swatches-sm .color-swatch:hover {
+    transform: none;
+    box-shadow: none;
+}

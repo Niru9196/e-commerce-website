@@ -1,0 +1,61 @@
+.skeleton {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-alt);
+    border-radius: var(--radius-sm);
+}
+
+.skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 251, 242, 0.65),
+        transparent
+    );
+    animation: skeleton-shimmer 1.4s var(--ease) infinite;
+}
+
+@keyframes skeleton-shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Under reduced motion the sweep is replaced by a static tint so there is
+   still a visible "pending" affordance without movement. */
+@media (prefers-reduced-motion: reduce) {
+    .skeleton::after {
+        animation: none;
+        transform: none;
+        background: rgba(255, 251, 242, 0.35);
+    }
+}
+
+.skeleton-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.skeleton-card-image {
+    width: 100%;
+    aspect-ratio: 5 / 6;
+    height: auto;
+}
+
+.skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--grid-gap) var(--space-5);
+}
+
+@media (min-width: 768px) {
+    .skeleton-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+}

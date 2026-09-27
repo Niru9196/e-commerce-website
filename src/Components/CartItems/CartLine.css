@@ -1,0 +1,119 @@
+.cart-line {
+    display: grid;
+    grid-template-columns: 5rem 1fr auto;
+    gap: var(--space-4);
+    align-items: start;
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.cart-line-media {
+    display: block;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-alt);
+    transition: box-shadow var(--duration-base) var(--ease);
+}
+
+.cart-line-media:hover {
+    box-shadow: var(--shadow-2);
+}
+
+.cart-line-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cart-line-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+}
+
+.cart-line-name {
+    font-size: var(--text-base);
+    color: var(--fg);
+    max-width: 34ch;
+    border-bottom: 1px solid transparent;
+    width: fit-content;
+    transition: border-color var(--duration-fast) var(--ease);
+}
+
+.cart-line-name:hover {
+    border-bottom-color: var(--fg);
+}
+
+.cart-line-unit {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--fg-muted);
+}
+
+.cart-line-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    margin-top: var(--space-2);
+}
+
+.cart-line-remove {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    transition: color var(--duration-fast) var(--ease);
+}
+
+.cart-line-remove:hover {
+    color: var(--accent);
+}
+
+.cart-line-remove img {
+    width: 11px;
+}
+
+.cart-line-total {
+    font-size: var(--text-md);
+    font-weight: 600;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* Drawer variant */
+.cart-line-compact {
+    grid-template-columns: 3.75rem 1fr;
+    gap: var(--space-3);
+    padding: var(--space-4) 0;
+}
+
+.cart-line-compact .cart-line-total {
+    grid-column: 2;
+    font-size: var(--text-base);
+}
+
+.cart-line-compact .cart-line-name {
+    font-size: var(--text-sm);
+}
+
+@media (max-width: 600px) {
+    .cart-line {
+        grid-template-columns: 4.5rem 1fr;
+    }
+
+    .cart-line-total {
+        grid-column: 2;
+    }
+}

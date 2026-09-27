@@ -1,0 +1,97 @@
+.breadcrumbs {
+    padding: var(--space-5) var(--page-margin);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+}
+
+.breadcrumbs-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--fg-muted);
+}
+
+.breadcrumbs-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 0;
+}
+
+.breadcrumbs-arrow {
+    width: 8px;
+    opacity: 0.5;
+    flex-shrink: 0;
+}
+
+.breadcrumbs-link {
+    color: var(--fg-muted);
+    /* Transparent underline reserved up front so the hover state doesn't
+       shift the text baseline. */
+    border-bottom: 1px solid transparent;
+    transition: color var(--duration-fast) var(--ease),
+        border-color var(--duration-fast) var(--ease);
+}
+
+.breadcrumbs-link:hover {
+    color: var(--fg);
+    border-bottom-color: var(--fg);
+}
+
+.breadcrumbs-current {
+    color: var(--fg);
+}
+
+.breadcrumbs-truncate {
+    display: inline-block;
+    max-width: 22ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
+
+@media (min-width: 1025px) {
+    .breadcrumbs {
+        padding: var(--space-5) var(--page-margin-lg);
+    }
+
+    .breadcrumbs-truncate {
+        max-width: 40ch;
+    }
+}
+
+/* On narrow screens keep only the first crumb (Home) and the last two, so
+   a long trail never wraps to three lines on a phone. The full trail stays
+   in the DOM, so assistive technology is unaffected. */
+@media (max-width: 600px) {
+    .breadcrumbs-list {
+        flex-wrap: nowrap;
+        overflow: hidden;
+    }
+
+    .breadcrumbs-item:not(:first-child):not(:last-child):not(:nth-last-child(2)) {
+        display: none;
+    }
+
+    /* Ellipsis only when there were genuinely more than three crumbs.
+       Falls back to no ellipsis where :has() is unsupported. */
+    .breadcrumbs-list:has(> :nth-child(4))
+        .breadcrumbs-item:nth-last-child(2)::before {
+        content: "…";
+        margin-right: var(--space-1);
+        opacity: 0.6;
+    }
+
+    .breadcrumbs-truncate {
+        max-width: 14ch;
+    }
+}

@@ -1,140 +1,160 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import "./CartItems.css";
-import { ShopContext } from "../../Context/ShopContext";
-import remove_icon from "../Assets/cart_cross_icon.png";
+import { useShop } from "../../Context/ShopContext";
+import { useToast } from "../../Context/ToastContext";
+import { EmptyState } from "../States/States";
+import Modal from "../Modal/Modal";
+import CartLine from "./CartLine";
+import PromoForm from "./PromoForm";
+import OrderSummary from "./OrderSummary";
 
 const CartItems = () => {
-    const [isMobile, setIsMobile] = useState(false);
-    const { all_product, cartItems, removeFromCart, getTotalCartAmount } =
-        useContext(ShopContext);
+    const { cartLines, totals, updateQuantity, removeLine, clearCart } =
+        useShop();
+    const toast = useToast();
+    const prefersReduced = useReducedMotion();
+    const [confirmClear, setConfirmClear] = useState(false);
 
-    useEffect(() => {
-        const checkScreenWidth = () => {
-            setIsMobile(window.innerWidth < 746);
-        };
-
-        checkScreenWidth();
-
-        window.addEventListener("resize", checkScreenWidth);
-
-        return () => {
-            window.removeEventListener("resize", checkScreenWidth);
-        };
-    }, []);
+    if (cartLines.length === 0) {
+        return (
+            <div className="cartitems cartitems-empty">
+                <EmptyState
+                    eyebrow="YOUR BAG"
+                    title="Your bag is empty"
+                    message="Nothing here yet. Browse the catalogue and add a few pieces to get started."
+                    linkTo="/"
+                    linkLabel="Continue shopping"
+                >
+                    <div className="state-suggestions">
+                        <Link className="state-suggestion" to="/new-arrivals">
+                            New arrivals
+                        </Link>
+                        <Link className="state-suggestion" to="/sale">
+                            Sale
+                        </Link>
+                        <Link className="state-suggestion" to="/wishlist">
+                            Your wishlist
+                        </Link>
+                    </div>
+                </EmptyState>
+            </div>
+        );
+    }
 
     return (
         <div className="cartitems">
-            <div className="cartitems-format-main">
-                <p>Products</p>
-                <p>Title</p>
-                <p>Price</p>
-                <p>Quantity</p>
-                <p>Total</p>
-                <p>Remove</p>
-            </div>
-            {!isMobile && <hr />}
-            {all_product.map((e) => {
-                if (cartItems[e.id] > 0) {
-                    return isMobile ? (
-                        <div key={e.id} className="cartitems-format-mobile">
-                            <div className="cartitems-format-main-mobile">
-                                <img
-                                    src={e.image}
-                                    alt=""
-                                    className="carticon-product-icon"
-                                />
-                                <p>{e.name}</p>
-                                <img
-                                    className="cartitems-remove-icon"
-                                    src={remove_icon}
-                                    onClick={() => {
-                                        removeFromCart(e.id);
-                                    }}
-                                    alt=""
-                                />
-                            </div>
-                            <div className="cartItems-price">
-                                <div className="cartItem-price-quantity">
-                                    <p>Price</p>
-                                    <p className="cartItem-price-tag">
-                                        ${e.new_price}
-                                    </p>
-                                </div>
-                                <div className="cartItem-price-quantity">
-                                    <p>Quantity</p>
-                                    <button className="cartitems-quantity cartItem-price-tag">
-                                        {cartItems[e.id]}
-                                    </button>
-                                </div>
-                                <div className="cartItem-price-quantity">
-                                    <p>Total</p>
-                                    <p className="cartItem-price-tag">
-                                        ${e.new_price * cartItems[e.id]}
-                                    </p>
-                                </div>
-                            </div>
-                            <hr />
-                        </div>
-                    ) : (
-                        <div key={e.id}>
-                            <div className="cartitems-format cartitems-format-main">
-                                <img
-                                    src={e.image}
-                                    alt=""
-                                    className="carticon-product-icon"
-                                />
-                                <p>{e.name}</p>
-                                <p>${e.new_price}</p>
-                                <button className="cartitems-quantity">
-                                    {cartItems[e.id]}
-                                </button>
-                                <p>${e.new_price * cartItems[e.id]}</p>
-                                <img
-                                    className="cartitems-remove-icon"
-                                    src={remove_icon}
-                                    onClick={() => {
-                                        removeFromCart(e.id);
-                                    }}
-                                    alt=""
-                                />
-                            </div>
-                            <hr />
-                        </div>
-                    );
-                }
-                return null;
-            })}
-            <div className="cartitems-down">
-                <div className="cartitems-total">
-                    <h1>Cart Total</h1>
-                    <div>
-                        <div className="cartitems-total-item">
-                            <p>Subtotal</p>
-                            <p>${getTotalCartAmount()}</p>
-                        </div>
-                        <hr />
-                        <div className="cartitems-total-item">
-                            <p>Shipping Fee</p>
-                            <p>Free</p>
-                        </div>
-                        <hr />
-                        <div className="cartitems-total-item">
-                            <h1>Total</h1>
-                            <h3>${getTotalCartAmount()}</h3>
-                        </div>
-                    </div>
-                    <button>PROCEED TO CHECKOUT</button>
+            <header className="cartitems-head">
+                <div>
+                    <span className="cat-index">08 / YOUR BAG</span>
+                    <h1>Your bag</h1>
                 </div>
-                <div className="cartitems-promocode">
-                    <p>If you have a promo code,Enter it here</p>
-                    <div className="cartitems-promobox">
-                        <input type="text" placeholder="promo code" />
+                <span className="sku-tag">
+                    {totals.totalItems}{" "}
+                    {totals.totalItems === 1 ? "ITEM" : "ITEMS"}
+                </span>
+            </header>
+            <hr className="rule" />
+
+            <div className="cartitems-layout">
+                <div className="cartitems-lines">
+                    <AnimatePresence initial={false}>
+                        {cartLines.map((line) => (
+                            <motion.div
+                                key={line.key}
+                                layout={!prefersReduced}
+                                exit={
+                                    prefersReduced
+                                        ? { opacity: 0 }
+                                        : {
+                                              opacity: 0,
+                                              x: -24,
+                                              height: 0,
+                                              marginBottom: 0,
+                                          }
+                                }
+                                transition={{ duration: 0.25 }}
+                                style={{ overflow: "hidden" }}
+                            >
+                                <CartLine
+                                    line={line}
+                                    onQuantityChange={(next) =>
+                                        updateQuantity(line.key, next)
+                                    }
+                                    onRemove={() => {
+                                        removeLine(line.key);
+                                        toast.push({
+                                            title: "Removed from bag",
+                                            message: line.product.name,
+                                            duration: 3000,
+                                        });
+                                    }}
+                                />
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+
+                    <div className="cartitems-actions">
+                        <Link className="btn btn-outline btn-sm" to="/">
+                            Continue shopping
+                        </Link>
+                        <button
+                            type="button"
+                            className="cartitems-clear"
+                            onClick={() => setConfirmClear(true)}
+                        >
+                            Empty bag
+                        </button>
                     </div>
-                    <button className="cartitems-promobox-submit">
-                        SUBMIT
-                    </button>
                 </div>
+
+                <aside className="cartitems-aside" aria-label="Order summary">
+                    <OrderSummary />
+                    <PromoForm />
+                </aside>
             </div>
+
+            <Modal
+                open={confirmClear}
+                onClose={() => setConfirmClear(false)}
+                labelledBy="clear-cart-title"
+                size="sm"
+            >
+                <div className="confirm-dialog">
+                    <span className="cat-index">CONFIRM</span>
+                    <h2 id="clear-cart-title">Empty your bag?</h2>
+                    <p>
+                        This removes all {totals.totalItems}{" "}
+                        {totals.totalItems === 1 ? "item" : "items"}. It can't be
+                        undone.
+                    </p>
+                    <div className="confirm-dialog-actions">
+                        <button
+                            type="button"
+                            className="btn btn-primary btn-sm"
+                            onClick={() => {
+                                clearCart();
+                                setConfirmClear(false);
+                                toast.push({
+                                    title: "Bag emptied",
+                                    message: "All items removed.",
+                                });
+                            }}
+                        >
+                            Yes, empty it
+                        </button>
+                        <button
+                            type="button"
+                            className="btn btn-outline btn-sm"
+                            onClick={() => setConfirmClear(false)}
+                            data-autofocus
+                        >
+                            Keep my items
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 };

@@ -1,151 +1,196 @@
 .hero {
-    height: 100vh;
-    background: linear-gradient(180deg, #fde1ff, #e1ffea22 60%);
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px;
-    width: 100vw;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    grid-template-areas: "left right";
+    align-items: stretch;
+    min-height: 88vh;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
 }
 
 .hero-left {
-    flex: 1;
+    grid-area: left;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 20px;
-    padding-left: 180px;
-    line-height: 1;
-    min-width: 300px;
+    gap: var(--space-6);
+    padding: var(--space-8) var(--page-margin-lg);
+    min-width: 0;
 }
 
 .hero-left h2 {
-    color: #090909;
-    font-size: 26px;
-    font-weight: 500;
+    font-family: var(--font-body);
+    color: var(--fg-muted);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
 }
 
-.hero-left p {
-    color: #171717;
-    font-size: 80px;
-    font-weight: 500;
-    margin: 0;
+.hero-left > div:nth-of-type(1) {
+    line-height: 0.98;
 }
 
 .hero-hand-icon {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: var(--space-4);
 }
 
 .hero-hand-icon img {
-    width: 80px;
+    width: 44px;
+    filter: grayscale(1) contrast(1.1);
+}
+
+.hero-hand-icon p {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: var(--text-3xl);
+    color: var(--accent);
+}
+
+.hero-left p {
+    font-family: var(--font-display);
+    color: var(--fg);
+    font-size: var(--text-5xl);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0;
 }
 
 .hero-latest-btn {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
-    width: 310px;
-    height: 55px;
-    border-radius: 75px;
-    margin-top: 30px;
-    background: #ff4141;
-    color: white;
-    font-size: 22px;
-    font-weight: 500;
+    gap: var(--space-3);
+    width: fit-content;
+    padding: 1rem 1.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--fg);
+    margin-top: var(--space-2);
+    background: var(--fg);
+    color: var(--bg);
+    font-size: var(--text-base);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
     cursor: pointer;
+    transition: background var(--duration-base) var(--ease), color var(--duration-base) var(--ease);
+}
+
+.hero-latest-btn:hover {
+    background: transparent;
+    color: var(--fg);
+}
+
+.hero-latest-btn img {
+    width: 14px;
+    filter: invert(1);
+    transition: filter var(--duration-base) var(--ease), transform var(--duration-base) var(--ease);
+}
+
+.hero-latest-btn:hover img {
+    filter: none;
+    transform: translateX(3px);
 }
 
 .hero-right {
-    flex: 1;
+    grid-area: right;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+    border-left: 1px solid var(--border);
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 300px;
+    padding: var(--space-7);
 }
 
-.hero-right img {
-    width: 70%;
-    max-width: 400px;
+.hero-plate {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-height: 42rem;
+}
+
+.hero-plate img {
+    /* Oversized and offset so the parallax translate always keeps the
+       plate fully covered. Without the headroom, drifting the image
+       would expose bare background at the top or bottom edge. */
+    position: absolute;
+    top: -15%;
+    left: 0;
+    width: 100%;
+    height: 130%;
+    object-fit: cover;
+    object-position: top center;
+    will-change: transform;
+}
+
+.hero-cta-wrap {
+    display: flex;
 }
 
 @media (max-width: 1024px) {
     .hero-left {
-        padding-left: 80px;
-        padding-top: 20px;
+        padding: var(--space-7) var(--page-margin);
     }
 
     .hero-left p {
-        font-size: 60px;
-    }
-
-    .hero-hand-icon img {
-        width: 60px;
-    }
-
-    .hero-latest-btn {
-        width: 260px;
-        height: 50px;
-        font-size: 18px;
+        font-size: var(--text-4xl);
     }
 }
 
 @media (max-width: 768px) {
     .hero {
-        flex-direction: column;
-        height: auto;
-        align-items: center;
-        text-align: center;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "right"
+            "left";
+        min-height: auto;
     }
 
     .hero-left {
-        padding-left: 0;
-        align-items: center;
+        padding: var(--space-6) var(--page-margin);
+        text-align: left;
+    }
+
+    .hero-right {
+        aspect-ratio: 4 / 3;
+        border-left: none;
+        border-bottom: 1px solid var(--border);
+        padding: var(--space-4);
+    }
+
+    .hero-plate {
+        max-height: none;
     }
 
     .hero-left p {
-        font-size: 48px;
+        font-size: var(--text-3xl);
     }
 
-    .hero-hand-icon {
-        justify-content: center;
-    }
-
-    .hero-hand-icon img {
-        width: 50px;
+    .hero-hand-icon p {
+        font-size: var(--text-2xl);
     }
 
     .hero-latest-btn {
-        width: 220px;
-        height: 45px;
-        font-size: 16px;
-    }
-
-    .hero-right img {
-        width: 90%;
+        width: 100%;
     }
 }
 
 @media (max-width: 480px) {
-    .hero {
-        padding: 0px;
-    }
     .hero-left h2 {
-        font-size: 20px;
+        font-size: var(--text-xs);
     }
 
     .hero-left p {
-        font-size: 36px;
+        font-size: var(--text-2xl);
     }
 
     .hero-hand-icon img {
-        width: 40px;
-    }
-
-    .hero-latest-btn {
-        width: 180px;
-        height: 40px;
-        font-size: 14px;
+        width: 32px;
     }
 }

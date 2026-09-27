@@ -1,0 +1,62 @@
+.qty-stepper {
+    display: inline-flex;
+    align-items: stretch;
+    border: 1px solid var(--border-strong);
+    background: var(--bg);
+    width: fit-content;
+    box-shadow: var(--shadow-1);
+}
+
+.qty-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: var(--text-md);
+    line-height: 1;
+    color: var(--fg);
+    transition: background var(--duration-fast) var(--ease),
+        color var(--duration-fast) var(--ease);
+}
+
+.qty-btn:hover:not(:disabled) {
+    background: var(--fg);
+    color: var(--bg);
+}
+
+.qty-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.qty-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    padding: 0 var(--space-2);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+}
+
+.qty-stepper-md .qty-btn {
+    height: 2.25rem;
+}
+
+.qty-stepper-sm .qty-btn {
+    height: 1.9rem;
+    width: 1.9rem;
+    font-size: var(--text-sm);
+}
+
+.qty-stepper-sm .qty-value {
+    min-width: 2rem;
+    font-size: var(--text-xs);
+}

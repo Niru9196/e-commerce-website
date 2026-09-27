@@ -1,20 +1,40 @@
-import React from 'react'
-import './Popular.css'
-import data_product from '../Assets/data'
-import Item from '../Item/Item'
+import React, { useCallback } from "react";
+import "./Popular.css";
+import { getPopular } from "../../api/products";
+import useAsync from "../../hooks/useAsync";
+import ProductGrid from "../ProductGrid/ProductGrid";
+import { RevealOnScroll } from "../Motion/Reveal";
 
 const Popular = () => {
-  return (
-    <div className='popular'>
-      <h1>POPULAR IN WOMEN</h1>
-      <hr />
-      <div className="popular-item">
-        {data_product.map((item,i)=> {
-            return <Item key={i} id = {item.id} name = {item.name} image = {item.image} new_price = {item.new_price} old_price = {item.old_price} />
-        })}
-      </div>
-    </div>
-  )
-}
+    const fetchPopular = useCallback(
+        ({ signal }) => getPopular({ signal }),
+        []
+    );
+    const { data, status, error, retry } = useAsync(fetchPopular, []);
+    const products = data || [];
 
-export default Popular
+    return (
+        <section className="popular" aria-labelledby="popular-heading">
+            <RevealOnScroll className="section-head">
+                <span className="cat-index">02 / SELECTED</span>
+                <h1 id="popular-heading">Popular this season</h1>
+                <span className="sku-tag">
+                    {status === "success"
+                        ? `${products.length} ITEMS — TOP RATED`
+                        : "LOADING SELECTION"}
+                </span>
+            </RevealOnScroll>
+            <hr className="rule" />
+            <ProductGrid
+                products={products}
+                status={status}
+                error={error}
+                onRetry={retry}
+                skeletonCount={8}
+                className="product-grid-rail popular-item"
+            />
+        </section>
+    );
+};
+
+export default Popular;

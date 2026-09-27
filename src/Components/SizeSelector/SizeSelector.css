@@ -1,0 +1,99 @@
+.size-selector {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.size-selector-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+}
+
+.size-selector-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--fg);
+}
+
+.size-selector-guide {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    border-bottom: 1px solid var(--border-strong);
+    transition: color var(--duration-fast) var(--ease),
+        border-color var(--duration-fast) var(--ease);
+}
+
+.size-selector-guide:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+.size-selector-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.size-option {
+    min-width: 3.25rem;
+    padding: 0.7rem 0.9rem;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.02em;
+    color: var(--fg);
+    cursor: pointer;
+    transition: background var(--duration-base) var(--ease),
+        color var(--duration-base) var(--ease),
+        border-color var(--duration-base) var(--ease),
+        box-shadow var(--duration-base) var(--ease);
+}
+
+.size-option:hover:not(:disabled) {
+    border-color: var(--fg);
+    box-shadow: var(--shadow-1);
+}
+
+.size-option.is-selected {
+    background: var(--fg);
+    border-color: var(--fg);
+    color: var(--bg);
+    box-shadow: var(--shadow-2);
+}
+
+/* Struck through rather than merely faded, so unavailability reads at a
+   glance and does not rely on colour alone. */
+.size-option.is-unavailable {
+    cursor: not-allowed;
+    color: var(--fg-muted);
+    opacity: 0.5;
+    background-image: linear-gradient(
+        to top left,
+        transparent calc(50% - 1px),
+        var(--border-strong) 50%,
+        transparent calc(50% + 1px)
+    );
+}
+
+.size-selector-error {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--accent);
+}
+
+.size-selector-stock {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--accent);
+}

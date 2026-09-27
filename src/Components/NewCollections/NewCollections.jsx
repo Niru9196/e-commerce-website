@@ -1,20 +1,46 @@
-import React from 'react'
-import './NewCollections.css'
-import new_collection from '../Assets/new_collections'
-import Item from '../Item/Item'
+import React, { useCallback } from "react";
+import { Link } from "react-router-dom";
+import "./NewCollections.css";
+import { getNewArrivals } from "../../api/products";
+import useAsync from "../../hooks/useAsync";
+import ProductGrid from "../ProductGrid/ProductGrid";
+import { RevealOnScroll } from "../Motion/Reveal";
 
 const NewCollections = () => {
-  return (
-    <div className='new-collections'>
-      <h1>NEW COLLECTIONS</h1>
-      <hr/>
-      <div className='collections'>
-        {new_collection.map((item , i)=> {
-          return <Item  key={i} id = {item.id} name = {item.name} image = {item.image} new_price = {item.new_price} old_price = {item.old_price} />
-        })}
-      </div>
-    </div>
-  )
-}
+    const fetchNew = useCallback(
+        ({ signal }) => getNewArrivals({ signal }),
+        []
+    );
+    const { data, status, error, retry } = useAsync(fetchNew, []);
+    const products = data || [];
 
-export default NewCollections
+    return (
+        <section className="new-collections" aria-labelledby="new-heading">
+            <RevealOnScroll className="section-head">
+                <span className="cat-index">03 / JUST IN</span>
+                <h1 id="new-heading">New collections</h1>
+                <span className="sku-tag">
+                    {status === "success"
+                        ? `${products.length} ITEMS — ALL CATEGORIES`
+                        : "LOADING SELECTION"}
+                </span>
+            </RevealOnScroll>
+            <hr className="rule" />
+            <ProductGrid
+                products={products}
+                status={status}
+                error={error}
+                onRetry={retry}
+                skeletonCount={8}
+                className="product-grid-rail collections"
+            />
+            <div className="new-collections-footer">
+                <Link className="btn btn-outline btn-sm" to="/new-arrivals">
+                    View all new arrivals
+                </Link>
+            </div>
+        </section>
+    );
+};
+
+export default NewCollections;

@@ -1,70 +1,82 @@
 .popular {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding: 2rem;
-  }
-  
-  .popular h1 {
-    color: #171717;
-    font-size: 3.125rem;
-    font-weight: 600;
-    text-align: center;
-  }
-  
-  .popular hr {
-    width: 12.5rem;
-    height: 0.75rem;
-    border-radius: 0.625rem;
-    background: #252525;
-  }
-  
-  .popular-item {
-    margin-top: 3.125rem;
+    gap: var(--space-6);
+    padding: var(--space-9) var(--page-margin);
+    border-bottom: 1px solid var(--border);
+}
+
+.popular h1 {
+    font-family: var(--font-display);
+    color: var(--fg);
+    font-size: var(--text-3xl);
+    font-weight: 500;
+    margin-top: var(--space-2);
+}
+
+.section-head {
     display: flex;
-    gap: 1rem;
+    align-items: baseline;
     flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  @media (max-width: 37.5rem) {
+    gap: var(--space-3) var(--space-5);
+}
 
+.section-head .sku-tag {
+    margin-left: auto;
+}
+
+.popular > .rule {
+    width: 100%;
+}
+
+.popular-item {
+    margin-top: var(--space-2);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6) var(--space-5);
+}
+
+.popular-item .item {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .popular {
+        padding: var(--space-7) var(--page-margin);
+    }
 
     .popular h1 {
-      font-size: 1.875rem;
+        font-size: var(--text-2xl);
     }
-  
+
+    .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+    }
+
+    .section-head .sku-tag {
+        margin-left: 0;
+    }
+
     .popular-item {
-      gap: 1.25rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-5) var(--space-4);
     }
-  }
-  
-  @media (min-width: 37.625rem) and (max-width: 64rem) {
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
     .popular h1 {
-      font-size: 2.5rem;
+        font-size: var(--text-2xl);
     }
-  
+
     .popular-item {
-      gap: 1.25rem;
+        grid-template-columns: repeat(3, 1fr);
     }
-  
-    .popular-item .item {
-      width: 15.625rem;
+}
+
+@media (min-width: 1025px) {
+    .popular {
+        padding: var(--space-9) var(--page-margin-lg);
     }
-  }
-  
-  @media (min-width: 64.0625rem) {
-    .popular h1 {
-      font-size: 3.125rem;
-    }
-  
-    .popular-item {
-      gap: 1.875rem;
-    }
-  
-    .popular-item .item {
-      width: 18.75rem;
-    }
-  }
-  
+}

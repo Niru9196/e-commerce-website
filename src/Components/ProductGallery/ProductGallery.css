@@ -1,0 +1,112 @@
+.gallery {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--space-4);
+    min-width: 0;
+}
+
+/* ---- thumbnails ---- */
+
+.gallery-thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-3);
+}
+
+.gallery-thumb {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    transition: border-color var(--duration-base) var(--ease),
+        transform var(--duration-base) var(--ease-out-expo),
+        box-shadow var(--duration-base) var(--ease);
+}
+
+.gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease);
+}
+
+.gallery-thumb:hover {
+    transform: translateY(var(--lift-sm));
+    box-shadow: var(--shadow-2);
+}
+
+.gallery-thumb.is-active {
+    border-color: var(--fg);
+    box-shadow: var(--shadow-2);
+}
+
+/* Active thumb gets an ink bar, so selection is not conveyed by border
+   colour alone. */
+.gallery-thumb.is-active::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 3px;
+    background: var(--accent);
+    z-index: 2;
+}
+
+.gallery-thumb-index {
+    position: absolute;
+    top: var(--space-1);
+    left: var(--space-2);
+    z-index: 2;
+    color: var(--fg);
+    background: var(--bg);
+    padding: 0 3px;
+}
+
+/* ---- main plate ---- */
+
+.gallery-main {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+}
+
+.gallery-main-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (min-width: 768px) {
+    .gallery {
+        flex-direction: row;
+        gap: var(--space-4);
+    }
+
+    .gallery-thumbs {
+        grid-template-columns: 1fr;
+        grid-auto-rows: min-content;
+        width: 5.5rem;
+        flex-shrink: 0;
+    }
+
+    .gallery-main {
+        flex: 1;
+        aspect-ratio: auto;
+        min-height: 34rem;
+    }
+}
+
+@media (min-width: 1025px) {
+    .gallery-thumbs {
+        width: 6.5rem;
+    }
+
+    .gallery-main {
+        min-height: 40rem;
+    }
+}
