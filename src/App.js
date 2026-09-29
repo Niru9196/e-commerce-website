@@ -4,6 +4,7 @@ import { AnimatePresence, MotionConfig } from "framer-motion";
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
 import CartDrawer from "./Components/CartDrawer/CartDrawer";
+import AskWidget from "./Components/AskWidget/AskWidget";
 import CartDrawerProvider from "./Context/CartDrawerContext";
 import ScrollToTop from "./Components/Layout/ScrollToTop";
 import PageTransition from "./Components/Motion/PageTransition";
@@ -119,6 +120,7 @@ function App() {
                 </main>
                 <Footer />
                 <CartDrawer />
+                <AskWidget />
             </CartDrawerProvider>
         </MotionConfig>
     );
